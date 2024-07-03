@@ -1,0 +1,9 @@
+Database:
+  host: localhost
+  port: 3305
+  username: admin
+  password: secret123
+
+Server:
+  address: 199.118.0.9
+  port: 8089
