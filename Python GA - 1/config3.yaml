@@ -1,0 +1,9 @@
+Database:
+  host: localhost
+  port: 3309
+  username: admin
+  password: secret12345
+
+Server:
+  address: 192.168.89.09
+  port: 1234

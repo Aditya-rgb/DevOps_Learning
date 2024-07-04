@@ -59,26 +59,19 @@ def insert():
                     with open(file, 'r') as config:
                         #Converting yaml to dataset dict
                         yaml_dict = yaml.safe_load(config)
-                        #fetching only the basename of the yaml file
-                        basename,extension = os.path.splitext(file)
-                        #Initializing an empty dict. with the same name as the filename
-                        basename = {}
-                        #Fetching few sensitive info and pushig it to dataset dict
-                        basename["username"] = yaml_dict["Database"]["username"]
-                        basename["password"] = yaml_dict["Database"]["password"]
-                        basename["server_address"] = yaml_dict["Server"]["address"]
-                        yaml_to_json = json.dumps(basename, indent=1)
+                        #Mapping the filename to the configuration file to let people know which config file they are looking at
+                        yaml_dict["filename"] = os.path.basename(file)
+                        yaml_to_json = json.dumps(yaml_dict, indent=1)
                         print(yaml_to_json)
                         #creating json and writing to it.
                         json_file = open(f"{os.path.basename(file)}.json", "w")  
-                        
                         json_file.write(yaml_to_json) 
                         json_file.close() 
                         #Had to put this condition becuase the code was pushing single data twice due to app.run thus the "if" condition here
-                        if collection.find_one(basename):
+                        if collection.find_one(yaml_dict):
                             print("File exists, skipping insertion.")
                         else:
-                            pushing = collection.insert_one(basename)
+                            pushing = collection.insert_one(yaml_dict)
                             print(f"'{os.path.basename(file)}' converted to json and pushed to MongoDB.")
             
                         
