@@ -36,10 +36,25 @@ def configs_yaml():
         #taking data from the collection inside the DB
         sensitive_json = collection.find({})
         configuartions = list(sensitive_json)
+        #Declaring an empty list
+        yaml_list = []
         
-        #getting the response back from mongoDB and handelling the incoming json response:)
-        get_request = json_util.dumps(configuartions)
-        return jsonify(get_request)
+        #Parsing through the response we got from MongoDB
+        for element in configuartions:
+             
+             print("********************************")
+             print(element["filename"])
+             print(element)
+             get_request = json_util.dumps(element)
+             #Converting the json-string to dict
+             json_to_dict = json_util.loads(get_request)
+             #Converting the dict to yaml string
+             yaml_data = yaml.dump(json_to_dict, default_flow_style=False)
+             #Appending the loop iterations of each file to a list
+             yaml_list.append(yaml_data)
+             
+        #Returning the list as an output of the get mehtod
+        return jsonify(yaml_list)
 
 #Function to insert the spcific sensitive data to mongoDB
 def insert():
