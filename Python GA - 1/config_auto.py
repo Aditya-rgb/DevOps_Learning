@@ -8,7 +8,7 @@ import os
 import glob 
 #Importing Flask module and jsonify to handle json response
 from flask import Flask,jsonify  
-# Importing MongoClient for the interaction with MongoDB
+#Importing MongoClient for the interaction with MongoDB
 from pymongo import MongoClient  
 from bson import json_util
 
